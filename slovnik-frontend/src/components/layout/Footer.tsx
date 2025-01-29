@@ -44,7 +44,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-8 pt-8 border-t text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} CzechTionary. Všechna práva vyhrazena.</p>
+          <p>&copy; {new Date().getFullYear()} Slovník Novočeštiny.</p>
         </div>
       </div>
     </footer>

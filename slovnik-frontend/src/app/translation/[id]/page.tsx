@@ -7,6 +7,10 @@ export default async function TranslationPage(props: PageProps) {
   const response = await getTranslation(id);
   const translation = response.data;
 
+  // Separate nouns and verbs
+  const nouns = translation.czech.map(t => t.noun).filter(Boolean);
+  const verbs = translation.czech.map(t => t.verb).filter(Boolean);
+
   return (
     <div className="container mx-auto px-4 py-4 mt-2 bg-white">
       <Link href="/" className="inline-block mb-6 text-blue-600 hover:text-blue-800 font-medium">
@@ -21,21 +25,38 @@ export default async function TranslationPage(props: PageProps) {
             {/* Czech Translations */}
             <section>
               <h2 className="text-xl font-semibold mb-3 text-black">České překlady</h2>
-              <div className="space-y-4">
-                {translation.czech.map((czech) => (
-                  <div key={czech.id} className="border rounded-lg p-4 bg-white">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <span className="font-medium text-blue-600">Podstatné jméno:</span>{' '}
-                        <span className="text-lg text-black">{czech.noun}</span>
-                      </div>
-                      <div>
-                        <span className="font-medium text-red-600">Sloveso:</span>{' '}
-                        <span className="text-lg text-black">{czech.verb}</span>
-                      </div>
+              <div className="bg-white rounded-lg border p-4 space-y-3">
+                {/* Nouns Row */}
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-blue-600 min-w-[120px]">Podstatná jména:</span>
+                  <div className="flex flex-wrap gap-2">
+                    {nouns.map((noun, index) => (
+                      <span
+                        key={index}
+                        className="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm"
+                      >
+                        {noun}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Verbs Row - Only show if verbs exist */}
+                {verbs.length > 0 && (
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-red-600 min-w-[120px]">Slovesa:</span>
+                    <div className="flex flex-wrap gap-2">
+                      {verbs.map((verb, index) => (
+                        <span
+                          key={index}
+                          className="bg-red-50 text-red-800 px-3 py-1 rounded-full text-sm"
+                        >
+                          {verb}
+                        </span>
+                      ))}
                     </div>
                   </div>
-                ))}
+                )}
               </div>
             </section>
 
@@ -59,7 +80,7 @@ export default async function TranslationPage(props: PageProps) {
             {translation.example && (
               <section>
                 <h2 className="text-xl font-semibold mb-2 text-black">Příklad použití</h2>
-                <p className="text-black italic">{translation.example}</p>
+                <p className="text-black italic">"{translation.example}"</p>
               </section>
             )}
 

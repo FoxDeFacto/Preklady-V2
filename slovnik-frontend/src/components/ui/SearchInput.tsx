@@ -40,7 +40,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search in English or Czech..."
+          placeholder="Hledejte slova v český nebo anglický podobě..."
           className={`
             w-full px-4 py-3 pl-12
             bg-white rounded-lg
@@ -69,7 +69,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
             ${isHero ? 'text-base' : 'text-sm'}
           `}
         >
-          Search
+          Hledat
         </button>
       </div>
     </form>
