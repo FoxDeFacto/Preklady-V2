@@ -3,12 +3,11 @@ import type { Schema, Struct } from '@strapi/strapi';
 export interface CzechCzech extends Struct.ComponentSchema {
   collectionName: 'components_czech_czeches';
   info: {
+    description: '';
     displayName: 'czech';
   };
   attributes: {
-    noun: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+    noun: Schema.Attribute.String & Schema.Attribute.Unique;
     verb: Schema.Attribute.String & Schema.Attribute.Unique;
   };
 }

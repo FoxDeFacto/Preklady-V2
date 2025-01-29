@@ -18,7 +18,7 @@ export default function SearchPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
-  const pageSize = 30;
+  const pageSize = 10;
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -103,25 +103,29 @@ export default function SearchPage() {
           key={translation.id}
           className="block p-8 bg-white rounded-lg shadow hover:shadow-md transition-shadow"
         >
-          <div className="mb-4">
-            <h2 className="text-xl font-semibold mb-3">{translation.english}</h2>
-            <div className="text-gray-600 space-y-2">
-              {translation.czech.map((czech, index) => (
-                <span key={czech.id} className="inline-block">
-                  {index > 0 && ', '}
-                  <span className="bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full text-sm">{czech.noun}</span>
-                  {czech.verb && (
-                    <span className="bg-red-100 text-red-800 px-3 py-1.5 rounded-full text-sm ml-2">
-                      ({czech.verb})
-                    </span>
-                  )}
-                </span>
-              ))}
-            </div>
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold mb-3">{translation.english}</h2>
+          <div className="text-gray-600 space-y-2">
+            {translation.czech.map((czech, index) => (
+              <span key={czech.id} className="inline-block">
+                {index > 0 && ', '}
+                {czech.noun && (
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full text-sm mr-2">
+                    {czech.noun}
+                  </span>
+                )}
+                {czech.verb && (
+                  <span className="bg-red-100 text-red-800 px-3 py-1.5 rounded-full text-sm">
+                    {czech.verb}
+                  </span>
+                )}
+              </span>
+            ))}
           </div>
+        </div>
           {translation.example && (
             <p className="text-gray-500 mt-4">
-              Příklad: {translation.example}
+              <b>Příklad:</b> {translation.example}
             </p>
           )}
         </Link>
