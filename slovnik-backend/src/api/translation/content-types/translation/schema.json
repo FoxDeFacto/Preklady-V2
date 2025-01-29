@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "translations",
+  "info": {
+    "singularName": "translation",
+    "pluralName": "translations",
+    "displayName": "translation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "english": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "czech": {
+      "type": "component",
+      "repeatable": true,
+      "component": "czech.czech"
+    },
+    "etymology": {
+      "type": "richtext",
+      "required": true
+    },
+    "reason": {
+      "type": "richtext",
+      "required": true
+    },
+    "example": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}
