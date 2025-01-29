@@ -96,33 +96,37 @@ export default function SearchPage() {
         </div>
       ) : translations.length > 0 ? (
         <div>
-          <div className="grid gap-6">
-            {translations.map((translation) => (
-              <Link
-                href={`/translation/${translation.documentId}`}
-                key={translation.id}
-                className="block p-6 bg-white rounded-lg shadow hover:shadow-md transition-shadow"
-              >
-                <div className="mb-2">
-                  <h2 className="text-xl font-semibold">{translation.english}</h2>
-                  <div className="text-gray-600">
-                    {translation.czech.map((czech, index) => (
-                      <span key={czech.id}>
-                        {index > 0 && ', '}
-                        <span className="font-medium">{czech.noun}</span>
-                        {czech.verb && <span> ({czech.verb})</span>}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                {translation.example && (
-                  <p className="text-gray-500 mt-2">
-                    Příklad: {translation.example}
-                  </p>
-                )}
-              </Link>
-            ))}
+          <div className="grid gap-8 py-8">
+      {translations.map((translation) => (
+        <Link
+          href={`/translation/${translation.documentId}`}
+          key={translation.id}
+          className="block p-8 bg-white rounded-lg shadow hover:shadow-md transition-shadow"
+        >
+          <div className="mb-4">
+            <h2 className="text-xl font-semibold mb-3">{translation.english}</h2>
+            <div className="text-gray-600 space-y-2">
+              {translation.czech.map((czech, index) => (
+                <span key={czech.id} className="inline-block">
+                  {index > 0 && ', '}
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full text-sm">{czech.noun}</span>
+                  {czech.verb && (
+                    <span className="bg-red-100 text-red-800 px-3 py-1.5 rounded-full text-sm ml-2">
+                      ({czech.verb})
+                    </span>
+                  )}
+                </span>
+              ))}
+            </div>
           </div>
+          {translation.example && (
+            <p className="text-gray-500 mt-4">
+              Příklad: {translation.example}
+            </p>
+          )}
+        </Link>
+      ))}
+    </div>
 
           {totalPages > 1 && (
             <div className="flex justify-center gap-2 mt-8">

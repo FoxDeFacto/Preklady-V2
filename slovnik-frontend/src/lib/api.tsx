@@ -38,7 +38,26 @@ async function fetchAPI<T>(
 }
 
 export async function getRandomTranslations(limit: number = 6) {
-  return fetchAPI<ApiResponse<Translation[]>>(`/translations?populate=*&pagination[limit]=${limit}`);
+  try {
+    // First, get the total count
+    const countResponse = await fetchAPI<ApiResponse<Translation[]>>('/translations?pagination[pageSize]=1');
+    const total = countResponse.meta.pagination.total;
+    
+    if (total <= limit) {
+      return fetchAPI<ApiResponse<Translation[]>>(`/translations?populate=*&pagination[limit]=${total}`);
+    }
+    
+    const maxStart = Math.max(0, total - limit);
+    const randomStart = Math.floor(Math.random() * maxStart);
+    const randomSort = Math.random() < 0.5 ? 'asc' : 'desc';
+
+    return fetchAPI<ApiResponse<Translation[]>>(
+      `/translations?populate=*&pagination[start]=${randomStart}&pagination[limit]=${limit}&sort=updatedAt:${randomSort}`
+    );
+  } catch (error) {
+    console.error('Error fetching random translations:', error);
+    throw error;
+  }
 }
 
 export async function searchTranslations(
