@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { searchTranslations } from '@/lib/api';
 import { Translation } from '@/lib/types';
 import Link from 'next/link';
-import { Loader2 } from 'lucide-react';
+import { Loader2, RotateCcw } from 'lucide-react';
 
 export default function SearchPage() {
   const router = useRouter();
@@ -49,10 +49,20 @@ export default function SearchPage() {
     const formData = new FormData(event.target as HTMLFormElement);
     const searchQuery = formData.get('search') as string;
     
-    if (searchQuery.trim()) {
-      setQuery(searchQuery);
-      setCurrentPage(1);
-      router.push(`/search?q=${encodeURIComponent(searchQuery)}&page=1`);
+    setQuery(searchQuery.trim());
+    setCurrentPage(1);
+    router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}&page=1`);
+  };
+
+  const handleReset = () => {
+    setQuery('');
+    setCurrentPage(1);
+    router.push('/search');
+    
+    // Reset the form input
+    const form = document.querySelector('form') as HTMLFormElement;
+    if (form) {
+      form.reset();
     }
   };
 
@@ -81,6 +91,14 @@ export default function SearchPage() {
           >
             {isLoading ? 'Vyhledávám...' : 'Hledat'}
           </button>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="px-6 py-3 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-2"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Reset
+          </button>
         </div>
       </form>
 
@@ -97,40 +115,40 @@ export default function SearchPage() {
       ) : translations.length > 0 ? (
         <div>
           <div className="grid gap-8 py-8">
-      {translations.map((translation) => (
-        <Link
-          href={`/translation/${translation.documentId}`}
-          key={translation.id}
-          className="block p-8 bg-white rounded-lg shadow hover:shadow-md transition-shadow"
-        >
-        <div className="mb-4">
-          <h2 className="text-xl font-semibold mb-3">{translation.english}</h2>
-          <div className="text-gray-600 space-y-2">
-            {translation.czech.map((czech, index) => (
-              <span key={czech.id} className="inline-block">
-                {index > 0 && ', '}
-                {czech.noun && (
-                  <span className="bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full text-sm mr-2">
-                    {czech.noun}
-                  </span>
+            {translations.map((translation) => (
+              <Link
+                href={`/translation/${translation.documentId}`}
+                key={translation.id}
+                className="block p-8 bg-white rounded-lg shadow hover:shadow-md transition-shadow"
+              >
+                <div className="mb-4">
+                  <h2 className="text-xl font-semibold mb-3">{translation.english}</h2>
+                  <div className="text-gray-600 space-y-2">
+                    {translation.czech.map((czech, index) => (
+                      <span key={czech.id} className="inline-block">
+                        {index > 0 && ', '}
+                        {czech.noun && (
+                          <span className="bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full text-sm mr-2">
+                            {czech.noun}
+                          </span>
+                        )}
+                        {czech.verb && (
+                          <span className="bg-red-100 text-red-800 px-3 py-1.5 rounded-full text-sm">
+                            {czech.verb}
+                          </span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                {translation.example && (
+                  <p className="text-gray-500 mt-4">
+                    <b>Příklad:</b> {translation.example}
+                  </p>
                 )}
-                {czech.verb && (
-                  <span className="bg-red-100 text-red-800 px-3 py-1.5 rounded-full text-sm">
-                    {czech.verb}
-                  </span>
-                )}
-              </span>
+              </Link>
             ))}
           </div>
-        </div>
-          {translation.example && (
-            <p className="text-gray-500 mt-4">
-              <b>Příklad:</b> {translation.example}
-            </p>
-          )}
-        </Link>
-      ))}
-    </div>
 
           {totalPages > 1 && (
             <div className="flex justify-center gap-2 mt-8">
@@ -154,9 +172,9 @@ export default function SearchPage() {
             </div>
           )}
         </div>
-      ) : query && !isLoading ? (
+      ) : !isLoading ? (
         <div className="text-center py-12">
-          <p className="text-gray-600">Žádné výsledky pro "{query}"</p>
+          <p className="text-gray-600">Žádné výsledky{query ? ` pro "${query}"` : ''}</p>
         </div>
       ) : null}
     </div>
