@@ -1,9 +1,10 @@
 import { getTranslation } from '@/lib/api';
 import { PageProps } from '@/lib/types';
 import Link from 'next/link';
+import BackButton from '@/components/ui/BackButton';
 
 export default async function TranslationPage(props: PageProps) {
-  const id = await Promise.resolve(props.params.id);
+  const { id } = await Promise.resolve(props.params);
   const response = await getTranslation(id);
   const translation = response.data;
 
@@ -13,9 +14,7 @@ export default async function TranslationPage(props: PageProps) {
 
   return (
     <div className="container mx-auto px-4 py-4 mt-2 bg-white">
-      <Link href="/" className="inline-block mb-6 text-blue-600 hover:text-blue-800 font-medium">
-        ← Zpět na hlavní stránku
-      </Link>
+      <BackButton />
 
       <div className="bg-white shadow rounded-lg mb-6 border border-red-500">
         <div className="p-6">

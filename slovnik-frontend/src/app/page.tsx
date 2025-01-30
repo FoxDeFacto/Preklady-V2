@@ -95,14 +95,14 @@ export default function Home() {
                 <span className="text-2xl">📚</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">Detailní vysvětlení</h3>
-              <p className="text-gray-600">Pochopte původ a význam každého překladu</p>
+              <p className="text-gray-600">Každý překlad má svůj důvod</p>
             </div>
             <div className="text-center p-6">
               <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">🎯</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">Kreativní překlady</h3>
-              <p className="text-gray-600">Objevujte inovativní české ekvivalenty</p>
+              <p className="text-gray-600">Objevujte nové možnosti vyjadřovaní</p>
             </div>
           </div>
         </div>

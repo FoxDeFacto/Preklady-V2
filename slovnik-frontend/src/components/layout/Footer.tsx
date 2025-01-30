@@ -29,7 +29,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">O projektu</h3>
             <p className="text-gray-600">
-              CzechTionary je projekt zaměřený na kreativní překlad moderních anglických výrazů do češtiny.
+            Slovník <span className="text-red-500">Novo</span><span className="text-blue-500">češtiny</span> je můj osobní projekt zaměřený na kreativní překlad moderních anglických výrazů do češtiny.
             </p>
           </div>
           
