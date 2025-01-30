@@ -4,7 +4,7 @@ import Footer from '@/components/layout/Footer'
 
 
 export const metadata = {
-  title: 'CzechTionary',
+  title: 'Slovník Novočeštiny',
   description: 'Kreativní české překlady moderních anglických výrazů',
 }
 
