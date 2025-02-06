@@ -53,7 +53,6 @@ export interface SearchParams {
   [key: string]: string | string[] | undefined;
 }
 
-// Updated PageProps to match Next.js expectations where both params and searchParams are Promises
 export type PageProps = {
   params: Promise<PageParams>;
   searchParams?: Promise<SearchParams>;
