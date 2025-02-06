@@ -1,13 +1,73 @@
+// app/translation/[id]/page.tsx
+'use client';
+
+import { useEffect, useState } from 'react';
 import { getTranslation } from '@/lib/api';
-import { PageProps } from '@/lib/types';
+import { Translation, PageProps } from '@/lib/types';
 import BackButton from '@/components/ui/BackButton';
 
-export default async function TranslationPage({ params }: PageProps) {
-  const resolvedParams = await params;
-  const { id } = resolvedParams;
-  
-  const response = await getTranslation(id);
-  const translation = response.data;
+export default function TranslationPage({ params }: PageProps) {
+  const [translation, setTranslation] = useState<Translation | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTranslation = async () => {
+      try {
+        setLoading(true);
+        // Await the params promise to get the actual id
+        const resolvedParams = await params;
+        const response = await getTranslation(resolvedParams.id);
+        setTranslation(response.data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching translation:', err);
+        setError('Failed to load translation. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTranslation();
+  }, [params]);
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-4 mt-2">
+        <BackButton />
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-3/4 mb-6" />
+          <div className="space-y-4">
+            <div className="h-4 bg-gray-200 rounded w-1/2" />
+            <div className="h-4 bg-gray-200 rounded w-2/3" />
+            <div className="h-4 bg-gray-200 rounded w-3/4" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-4 mt-2">
+        <BackButton />
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <p className="text-red-800">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!translation) {
+    return (
+      <div className="container mx-auto px-4 py-4 mt-2">
+        <BackButton />
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <p className="text-yellow-800">Translation not found</p>
+        </div>
+      </div>
+    );
+  }
 
   // Separate nouns and verbs with type predicates
   const nouns = translation.czech
