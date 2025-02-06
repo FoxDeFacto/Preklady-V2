@@ -7,17 +7,22 @@ async function fetchAPI<T>(
   options: RequestInit = {}
 ): Promise<T> {
   const url = `${API_URL}/api${endpoint}`;
-  console.log('Fetching:', url);
 
-  const defaultOptions = {
+  const defaultOptions: RequestInit = {
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
+    mode: 'cors',
   };
 
   const mergedOptions = {
     ...defaultOptions,
     ...options,
+    headers: {
+      ...defaultOptions.headers,
+      ...options.headers,
+    },
   };
 
   try {
