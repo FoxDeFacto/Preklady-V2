@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_czech_czeches",
+  "info": {
+    "displayName": "czech",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "noun": {
+      "type": "string",
+      "required": false,
+      "unique": true
+    },
+    "verb": {
+      "type": "string",
+      "unique": true
+    }
+  }
+}
