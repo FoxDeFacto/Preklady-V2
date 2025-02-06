@@ -1,6 +1,7 @@
 import { Translation, Joke, ApiResponse, ApiSingleResponse } from './types';
+import { API } from '../config'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
+const API_URL = API || 'http://localhost:1337';
 
 async function fetchAPI<T>(
   endpoint: string,
