@@ -2,27 +2,36 @@
 
 import { useEffect, useState } from 'react';
 import { Translation, ApiResponse } from '@/lib/types';
-import { getRandomTranslations } from '@/lib/api';
+import { getRandomTranslations, getLatestTranslations } from '@/lib/api';
 import TranslationCard from '@/components/ui/TranslationCard';
 import SearchInput from '@/components/ui/SearchInput';
 
 export default function Home() {
   const [translations, setTranslations] = useState<Translation[]>([]);
+  const [latestTranslations, setLatestTranslations] = useState<Translation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [latestLoading, setLatestLoading] = useState(true);
 
   useEffect(() => {
-    const fetchTranslations = async () => {
+    const fetchData = async () => {
       try {
-        const response = await getRandomTranslations(6) as ApiResponse<Translation[]>;
-        setTranslations(response.data);
+        // Fetch both random and latest translations concurrently
+        const [randomResponse, latestResponse] = await Promise.all([
+          getRandomTranslations(6) as Promise<ApiResponse<Translation[]>>,
+          getLatestTranslations(3) as Promise<ApiResponse<Translation[]>>
+        ]);
+
+        setTranslations(randomResponse.data);
+        setLatestTranslations(latestResponse.data);
       } catch (error) {
         console.error('Error fetching translations:', error);
       } finally {
         setLoading(false);
+        setLatestLoading(false);
       }
     };
 
-    fetchTranslations();
+    fetchData();
   }, []);
 
   return (
@@ -42,6 +51,41 @@ export default function Home() {
             <SearchInput variant="hero" />
           </div>
         </div>
+      </section>
+
+      {/* Latest Translations Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            Nejnovější překlady
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Prohlédněte si nejnovější přírůstky do našeho slovníku.
+          </p>
+        </div>
+
+        {latestLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="bg-white rounded-lg shadow-md p-6 animate-pulse"
+              >
+                <div className="h-4 bg-gray-200 rounded w-3/4 mb-4" />
+                <div className="h-4 bg-gray-200 rounded w-1/2" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {latestTranslations.map((translation) => (
+              <TranslationCard
+                key={translation.id}
+                translation={translation}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Random Translations Section */}

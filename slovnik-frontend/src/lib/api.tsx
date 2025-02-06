@@ -112,3 +112,9 @@ export async function getRandomJoke() {
     } 
   } as ApiResponse<Joke[]>;
 }
+
+export async function getLatestTranslations(limit: number = 3) {
+  return fetchAPI<ApiResponse<Translation[]>>(
+    `/translations?populate=*&pagination[limit]=${limit}&sort=createdAt:desc`
+  );
+}
