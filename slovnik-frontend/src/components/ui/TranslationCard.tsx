@@ -20,9 +20,10 @@ const TranslationCard = ({ translation, showFull = false }: TranslationCardProps
         <div className="flex flex-wrap gap-2">
           {czech.map((translation) => (
             <div key={translation.id} className="space-y-1">
+              {translation.noun &&(
               <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
                 {translation.noun}
-              </span>
+              </span>)}
               {translation.verb && (
                 <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm ml-2">
                   {translation.verb}
