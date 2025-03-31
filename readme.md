@@ -76,7 +76,7 @@ DATABASE_FILENAME=.tmp/data.db
 export const API ='http://localhost:1337';
 ```
 
-4. Spuštění vývojového serveru:
+6. Spuštění vývojového serveru:
 ```bash
 npm run dev
 # nebo
