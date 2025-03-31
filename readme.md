@@ -48,10 +48,32 @@ npm install
 yarn install
 ```
 
-3. Vytvoření .env souboru:
+3. Vytvoření .env v strapi souboru:
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:1337
-NEXT_PUBLIC_STRAPI_TOKEN=váš-strapi-token
+HOST=0.0.0.0
+PORT=1337
+APP_KEYS="toBeModified1,toBeModified2"
+API_TOKEN_SALT=tobemodified
+ADMIN_JWT_SECRET=tobemodified
+TRANSFER_TOKEN_SALT=tobemodified
+JWT_SECRET=tobemodified
+
+
+# Database
+DATABASE_CLIENT=sqlite
+DATABASE_HOST=
+DATABASE_PORT=
+DATABASE_NAME=
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
+DATABASE_SSL=false
+DATABASE_FILENAME=.tmp/data.db
+```
+
+5. Úprava config.js souboru v nextu:
+```env
+// config.js
+export const API ='http://localhost:1337';
 ```
 
 4. Spuštění vývojového serveru:
