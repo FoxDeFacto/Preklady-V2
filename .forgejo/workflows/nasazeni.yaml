@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Checkout code
         run: |
-          git clone https://forgejo.example.org/vas-uzivatel/vas-projekt.git .
+          git clone https://git.lynder.dev/foxdefacto/Preklady.git .
           git checkout ${{ github.sha }}
           
       - name: Build Frontend Docker Image
