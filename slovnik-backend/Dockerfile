@@ -12,9 +12,10 @@ ENV PATH=/opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
 COPY . .
+# Vytvoříme adresář pro databázi a nastavíme oprávnění
+RUN mkdir -p /opt/app/.tmp
 RUN chown -R node:node /opt/app
 USER node
 RUN ["npm", "run", "build"]
 EXPOSE 1337
 CMD ["npm", "run", "develop"]
-
