@@ -1,6 +1,30 @@
-on: [push]
+name: Build and Deploy Slovnik
+
 jobs:
-  test:
+  build-and-deploy:
+    name: Build and Deploy
     runs-on: fedora
     steps:
-      - run: echo All Good
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Frontend Docker Image
+        run: |
+          cd slovnik-frontend
+          podman build -t slovnik-frontend:latest -f Dockerfile .
+          
+      - name: Build Backend Docker Image
+        run: |
+          cd slovnik-backend
+          podman build -t slovnik-backend:latest -f Dockerfile .
+          
+      - name: Stop Running Services
+        run: |
+          sudo systemctl stop slovnik-frontend.service
+          sudo systemctl stop slovnik-backend.service
+          
+      - name: Deploy New Services
+        run: |
+          # Předpokládám, že quadlety už máte nakonfigurované a pouze potřebujete restartovat služby
+          sudo systemctl start slovnik-frontend.service
+          sudo systemctl start slovnik-backend.service
