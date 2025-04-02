@@ -25,10 +25,10 @@ jobs:
         run: podman push localhost:5000/slovnik-frontend:latest
 
       - name: Stop Running Services
-        run: sudo systemctl stop slovnik-frontend.service
+        run: sudo systemctl stop frontend.service
 
       - name: Deploy New Services
         run: |
           podman pull localhost:5000/slovnik-frontend:latest
-          sudo systemctl start slovnik-frontend.service
-          sudo systemctl status slovnik-frontend.service
+          sudo systemctl start frontend.service
+          sudo systemctl status frontend.service
