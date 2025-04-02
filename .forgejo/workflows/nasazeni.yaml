@@ -27,23 +27,19 @@ jobs:
        #   podman build -t localhost:5000/slovnik-backend:latest -f Dockerfile .
           
       - name: Push Images to Local Registry
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
         run: |
           podman push localhost:5000/slovnik-frontend:latest
         #  podman push localhost:5000/slovnik-backend:latest
           
       - name: Stop Running Services
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
         run: |
           sudo systemctl stop slovnik-frontend.service
          # sudo systemctl stop slovnik-backend.service
           
       - name: Deploy New Services
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
         run: |
           podman pull localhost:5000/slovnik-frontend:latest
         #  podman pull localhost:5000/slovnik-backend:latest
-          
-          # Zkontrolujte, zda služby běží
+        
           sudo systemctl status slovnik-frontend.service
           sudo systemctl status slovnik-backend.service
