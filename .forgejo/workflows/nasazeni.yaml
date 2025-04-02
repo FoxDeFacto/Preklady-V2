@@ -21,25 +21,14 @@ jobs:
           cd slovnik-frontend
           podman build -t localhost:5000/slovnik-frontend:latest -f Dockerfile .
           
-    #  - name: Build Backend Docker Image
-     #   run: |
-      #    cd slovnik-backend
-       #   podman build -t localhost:5000/slovnik-backend:latest -f Dockerfile .
-          
-      - name: Push Images to Local Registry
-        run: |
-          podman push localhost:5000/slovnik-frontend:latest
-        #  podman push localhost:5000/slovnik-backend:latest
-          
+      - name: Push Frontend Image to Local Registry
+        run: podman push localhost:5000/slovnik-frontend:latest
+
       - name: Stop Running Services
-        run: |
-          sudo systemctl stop slovnik-frontend.service
-         # sudo systemctl stop slovnik-backend.service
-          
+        run: sudo systemctl stop slovnik-frontend.service
+
       - name: Deploy New Services
         run: |
           podman pull localhost:5000/slovnik-frontend:latest
-        #  podman pull localhost:5000/slovnik-backend:latest
-        
+          sudo systemctl start slovnik-frontend.service
           sudo systemctl status slovnik-frontend.service
-          sudo systemctl status slovnik-backend.service
