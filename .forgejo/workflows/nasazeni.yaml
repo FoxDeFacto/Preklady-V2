@@ -31,4 +31,3 @@ jobs:
         run: |
           podman pull localhost:5000/slovnik-frontend:latest
           sudo systemctl start frontend.service
-          sudo systemctl status frontend.service
