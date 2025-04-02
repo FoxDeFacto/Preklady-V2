@@ -16,7 +16,6 @@ jobs:
           git clone https://git.lynder.dev/foxdefacto/Preklady.git .
           git checkout ${{ github.sha }}
       
-          
       - name: Build Frontend Docker Image
         run: |
           cd slovnik-frontend
@@ -35,8 +34,8 @@ jobs:
 
       - name: Stop Running Services
         run: |
-        sudo systemctl stop frontend.service
-        sudo systemctl stop backend.service
+          sudo systemctl stop frontend.service
+          sudo systemctl stop backend.service
 
       - name: Deploy New Services
         run: |
