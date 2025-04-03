@@ -98,12 +98,17 @@ Všechny API endpointy jsou přístupné přes základní URL: `${API_URL}/api`
 
 - **Vyhledávání překladů**
   ```typescript
-  GET /translations?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}&filters[$or][0][english][$containsi]=${query}
+  GET /translations?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}&filters[$or][0][english][$containsi]=${query}&filters[$or][1][czech][noun][$containsi]=${query}&filters[$or][2][czech][verb][$containsi]=${query}
   ```
 
 - **Získání konkrétního překladu**
   ```typescript
   GET /translations/${id}?populate=*
+  ```
+
+- **Získání nejnovějších překladů**
+  ```typescript
+  GET /translations?populate=*&pagination[limit]=${limit}&sort=createdAt:desc
   ```
 
 #### Vtipy
@@ -180,6 +185,9 @@ export type PageProps = {
 ### Příklad použití API
 
 ```typescript
+// Příklad získání náhodných překladů
+const randomTranslations = await getRandomTranslations(6);
+
 // Příklad vyhledávání překladů
 const searchResults = await searchTranslations('hello', 1, 10);
 
@@ -188,16 +196,12 @@ const translation = await getTranslation('123');
 
 // Příklad získání náhodného vtipu
 const randomJoke = await getRandomJoke();
+
+// Příklad získání nejnovějších překladů
+const latestTranslations = await getLatestTranslations(3);
 ```
-
-## 🤝 Přispívání
-
-1. Forkněte repozitář
-2. Vytvořte feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commitněte změny (`git commit -m 'Add some AmazingFeature'`)
-4. Pushněte do branch (`git push origin feature/AmazingFeature`)
-5. Otevřete Pull Request
 
 ## 👥 Autoři
 
 - Ondřej Liška ([@FoxDeFacto](https://github.com/FoxDeFacto))
+- Kryštof Malinda ([@Lynder063](https://github.com/Lynder063))
