@@ -15,6 +15,9 @@ async function fetchAPI<T>(
     },
     credentials: 'include',
     mode: 'cors',
+    next: { 
+      revalidate: 1,
+    },
   };
 
   const mergedOptions = {
