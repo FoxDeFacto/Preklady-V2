@@ -1,6 +1,6 @@
 # Překladový slovník & databáze
 
-Tento projekt slouží k překladu současných anglických termínů do češtiny. Webová aplikace poskytuje uživatelsky přívětivý rozhraní, kde si můžete vyhledat překlady pro různá slova a pojmy, a nabízí podrobné informace o jejich původu, důvodech pro překlad a příkladech použití. Je postavena na Next.js, využívá Tailwind CSS pro stylizaci a backend je na Strapi.
+Tento projekt slouží k překladu současných anglických termínů do češtiny. Webová aplikace poskytuje uživatelsky přívětivý rozhraní, kde si můžete vyhledat překlady pro různá slova a pojmy, a nabízí podrobné informace o jejich původu, důvodech pro překlad a příkladech použití. Je postavena na Next.js, využívá Tailwind CSS pro stylizaci a backend je na Strapi. Web je dostupný na [Novo-čeština](https://novo-cestina.lynder.dev/)
 
 ## 🚀 Funkce
 
@@ -117,89 +117,6 @@ Všechny API endpointy jsou přístupné přes základní URL: `${API_URL}/api`
   ```typescript
   GET /jokes?pagination[start]=${randomStart}&pagination[limit]=1&populate=*
   ```
-
-### Datové Typy
-
-```typescript
-interface CzechTranslation {
-  id: number;
-  noun: string | null;
-  verb: string | null;
-}
-
-export interface Translation {
-  id: number;
-  documentId: string;
-  english: string;
-  czech: CzechTranslation[];
-  etymology?: string | null;
-  reason?: string | null;
-  example?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-}
-
-export interface PaginationMeta {
-  page: number;
-  pageSize: number;
-  pageCount: number;
-  total: number;
-}
-
-export interface ApiResponse<T> {
-  data: T;
-  meta: {
-    pagination: PaginationMeta;
-  };
-}
-
-export interface ApiSingleResponse<T> {
-  data: T;
-  meta: Record<string, unknown>;
-}
-
-export interface Joke {
-  id: number;
-  content: string;
-  attributes: {
-    createdAt: string;
-    updatedAt: string;
-  };
-}
-
-export interface PageParams {
-  id: string;
-}
-
-export interface SearchParams {
-  [key: string]: string | string[] | undefined;
-}
-
-export type PageProps = {
-  params: Promise<PageParams>;
-  searchParams?: Promise<SearchParams>;
-}
-```
-
-### Příklad použití API
-
-```typescript
-// Příklad získání náhodných překladů
-const randomTranslations = await getRandomTranslations(6);
-
-// Příklad vyhledávání překladů
-const searchResults = await searchTranslations('hello', 1, 10);
-
-// Příklad získání konkrétního překladu
-const translation = await getTranslation('123');
-
-// Příklad získání náhodného vtipu
-const randomJoke = await getRandomJoke();
-
-// Příklad získání nejnovějších překladů
-const latestTranslations = await getLatestTranslations(3);
-```
 
 ## 👥 Autoři
 
